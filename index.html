@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoExam AI - Loading...</title>
+    <style>
+        body {
+            background-color: #0e1117;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .loader {
+            border: 8px solid #1f2937;
+            border-top: 8px solid #3b82f6;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h2 { margin-bottom: 10px; }
+        p { color: #9ca3af; font-size: 14px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <h2>Menghubungkan ke AI...</h2>
+        <p>Membangunkan server, mohon tunggu sebentar.</p>
+    </div>
+
+    <script>
+        // ==========================================
+        // GANTI URL DI BAWAH INI DENGAN LINK RENDER LU
+        // Contoh: https://bot-ujian-xxxx.onrender.com
+        // ==========================================
+        const targetUrl = "https://bot-ujian-xxxx.onrender.com"; 
+
+        // Fungsi buat ngecek apakah server udah nyala atau belum
+        async function checkServer() {
+            try {
+                // Kita tembak URL-nya pakai mode 'no-cors' biar gak kena blokir CORS
+                await fetch(targetUrl, { mode: 'no-cors' });
+                
+                // Kalo sukses, langsung lempar user ke aplikasi Streamlit-nya
+                window.location.href = targetUrl;
+            } catch (error) {
+                // Kalo gagal (server masih tidur), tunggu 5 detik lalu coba lagi
+                setTimeout(checkServer, 5000);
+            }
+        }
+
+        // Mulai ngecek begitu halaman dibuka
+        checkServer();
+    </script>
+</body>
+</html>
